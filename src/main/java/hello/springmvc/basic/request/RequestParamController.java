@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import hello.springmvc.basic.HelloData;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -86,32 +88,28 @@ public class RequestParamController {
 		log.info("username={}, age={},", paramMap.get("username") , paramMap.get("age"));
 		return "ok";
 	}
+	
+	@ResponseBody
+	@RequestMapping("/model-attribute-v1")
+	public String modelAttributeV1(@ModelAttribute HelloData helloData) {
+		/*
+		HelloData helloData = new HelloData();
+		helloData.setUsername(username);
+		helloData.setAge(age);
+		*/
+		//@ModelAttribute를 사용하면 위의 코드를 자동으로 생성해준다.
+		
+		log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
+		log.info("helloData={}", helloData);
+		return "ok";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/model-attribute-v2")
+	public String modelAttributeV2(HelloData helloData) {
+		
+		log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
+		
+		return "ok";
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
